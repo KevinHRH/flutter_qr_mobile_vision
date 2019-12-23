@@ -55,6 +55,10 @@ public class QrMobileVisionPlugin implements MethodCallHandler, QrReaderCallback
     public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION) {
             waitingForPermissionResult = false;
+            //預防readingInstance為空造成閃退
+            if(readingInstance == null)
+                return false;
+            
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "Permissions request granted.");
                 stopReader();
